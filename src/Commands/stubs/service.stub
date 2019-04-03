@@ -1,0 +1,28 @@
+<?php
+
+namespace DummyNamespace;
+
+use PerfectOblivion\Services\Traits\SelfCallingService;
+
+class DummyClass
+{
+    use SelfCallingService;
+
+    /**
+     * Construct a new DummyClass.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the call to the service.
+     *
+     * @return mixed
+     */
+    public function DummyMethod()
+    {
+        //
+    }
+}
