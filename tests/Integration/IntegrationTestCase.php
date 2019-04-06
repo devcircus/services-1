@@ -1,9 +1,9 @@
 <?php
 
-namespace PerfectOblivoin\Services\Tests\Integration;
+namespace PerfectOblivion\Services\Tests\Integration;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use PerfectOblivoin\Services\ServicesServiceProvider;
+use PerfectOblivion\Services\ServicesServiceProvider;
 
 class IntegrationTestCase extends Orchestra
 {
