@@ -288,30 +288,8 @@ class StoreTaskController extends Controllerr
 }
 ```
 
-### Note on Service class parameters
-When calling your service class, you may pass multiple parameters:
-```php
-$this->call(MyService::class, $params, $anotherParam);
-// or
-$this->serviceCaller->call(MyService::class, $params, $anotherParam):
-// or
-MyService::call($params, $anotherParam);
-// or
-$service->run($params, $anotherParam);
-```
-
-I've found that usually, one array of parameters is sufficient, but you may have cases where you need to pass another parameter. Simply add these parameters when you call the Service, and these parameters will be passed to the 'run' method of your service. Be sure the 'run' method parameters match the arguments used, when the service is called:
-```php
-// MyServiceClass
-
-public function run($data, $mystring, $anotherString)
-{
-    //
-}
-
-// In your controller
-MyService::call($params, $string1, $string2);
-```
+### Queue the service call
+If you need to queue the service instead of calling it immediately, use the ```queue()``` method instead of the ```call()``` method. The package will handle the queue setup behind the scenes. It is not necessary to change how the Service class is constructed. Simply replace your ```call()``` invocations with ```queue()```. All queued services will be tagged with the name 'queued-service'.
 
 ### Testing
 
