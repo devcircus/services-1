@@ -2,35 +2,12 @@
 
 namespace PerfectOblivion\Services;
 
-use Illuminate\Contracts\Container\Container;
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Bus\Dispatcher;
 use PerfectOblivion\Services\Exceptions\ServiceHandlerMethodException;
 
 class ServiceCaller extends AbstractServiceCaller
 {
-    /**
-     * The container implementation.
-     *
-     * @var \Illuminate\Contracts\Container\Container
-     */
-    protected $container;
-
-    /**
-     * The handler method to be called.
-     *
-     * @var string
-     */
-    public static $handlerMethod;
-
-    /**
-     * Create a new service caller instance.
-     *
-     * @param  \Illuminate\Contracts\Container\Container  $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
     /**
      * Call a service through its appropriate handler.
      *
@@ -49,14 +26,23 @@ class ServiceCaller extends AbstractServiceCaller
     }
 
     /**
-     * Determine if the service handler method exists.
+     * Push the service call to the queue..
      *
-     * @param  mixed  $service
+     * @param  string  $service
+     * @param  mixed  ...$params
      *
-     * @return bool
+     * @throws \PerfectOblivion\Services\Exceptions\ServiceHandlerMethodException
+     *
+     * @return mixed
      */
-    public function hasHandler($service)
+    public function queue($service, ...$params)
     {
-        return method_exists($service, $this::$handlerMethod);
+        if (! $this->hasHandler($service)) {
+            throw ServiceHandlerMethodException::notFound($service);
+        }
+
+        return resolve(Dispatcher::class)->dispatch(
+            new QueuedService(Container::getInstance()->make($service), $params)
+        );
     }
 }

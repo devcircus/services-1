@@ -2,14 +2,33 @@
 
 namespace PerfectOblivion\Services;
 
+use Illuminate\Contracts\Container\Container;
+
 abstract class AbstractServiceCaller
 {
+    /**
+     * The container implementation.
+     *
+     * @var \Illuminate\Contracts\Container\Container
+     */
+    protected $container;
+
     /**
      * The handler method to be called.
      *
      * @var string
      */
-    public static $handlerMethod = 'run';
+    public static $handlerMethod;
+
+    /**
+     * Create a new service caller instance.
+     *
+     * @param  \Illuminate\Contracts\Container\Container  $container
+     */
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * Call a service through its appropriate handler.
@@ -22,13 +41,16 @@ abstract class AbstractServiceCaller
     abstract public function call($service, ...$params);
 
     /**
-     * Determine if the given service has a handler.
+     * Determine if the service handler method exists.
      *
      * @param  mixed  $service
      *
      * @return bool
      */
-    abstract public function hasHandler($service);
+    public function hasHandler($service)
+    {
+        return method_exists($service, $this::$handlerMethod);
+    }
 
     /**
      * Set the handler method name for services.
