@@ -18,7 +18,7 @@ abstract class AbstractServiceCaller
      *
      * @var string
      */
-    public static $handlerMethod;
+    public static $handlerMethod = 'run';
 
     /**
      * Create a new service caller instance.

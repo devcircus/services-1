@@ -1,7 +1,7 @@
 {
     "name": "perfect-oblivion/services",
     "description": "Service class Implementation for Laravel Projects",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "keywords": [
         "perfect-oblivion",
         "servicehandler",
