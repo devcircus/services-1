@@ -18,3 +18,7 @@ All notable changes to perfect-oblivion/services will be documented in this file
 -   Add default handler method name to AbstractServiceCaller
       - If service is called early in the laravel cycle, the handler method may not have been set yet.
       - Set a default method on the abstract class, which can still be overridden at runtime.
+
+## 0.3.0 - 09/03/2019
+
+-   Support Laravel 6.
